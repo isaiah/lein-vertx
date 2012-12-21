@@ -11,7 +11,7 @@ FIXME: and add an example usage that actually makes sense:
     $ lein vertx run vertx.http.server
 
 See [Vertx clojure
-examples](http://www.github.com/isaiah/vert.x/vertx-examples/src/main/clojure)
+examples](https://github.com/isaiah/vert.x/tree/clojure/vertx-examples/src/main/clojure)
 
 ## License
 
