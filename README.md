@@ -1,25 +1,20 @@
 # lein-vertx
 
-A Leiningen plugin to do many wonderful things.
+A leiningen plugin to ease clojure vertx verticle development.
 
 ## Usage
-
-FIXME: Use this for user-level plugins:
-
-Put `[lein-vertx "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your
-`:user` profile, or if you are on Leiningen 1.x do `lein plugin install
-lein-vertx 0.1.0-SNAPSHOT`.
-
-FIXME: Use this for project-level plugins:
 
 Put `[lein-vertx "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your project.clj.
 
 FIXME: and add an example usage that actually makes sense:
 
-    $ lein vertx
+    $ lein vertx run vertx.http.server
+
+See [Vertx clojure
+examples](http://www.github.com/isaiah/vert.x/vertx-examples/src/main/clojure)
 
 ## License
 
-Copyright © 2012 FIXME
+Copyright © 2012 Isaiah P.
 
 Distributed under the Eclipse Public License, the same as Clojure.
