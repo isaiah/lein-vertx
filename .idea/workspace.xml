@@ -4,14 +4,20 @@
     <list default="true" id="ba71b45a-273c-46ed-b55c-af7a700d3c12" name="Default" comment="" />
     <ignored path="lein-vertx.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="$PROJECT_DIR$/../../java/vert.x/vertx-examples/src/main/clojure/project.clj" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1355503145482" ignored="false" />
+    <file path="$PROJECT_DIR$/../../java/vert.x/vertx-examples/src/main/clojure/project.clj" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1356454836275" ignored="false" />
     <file path="/project.clj" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1355503129322" ignored="false" />
     <file path="/vertx.clj" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1355511844248" ignored="false" />
-    <file path="$PROJECT_DIR$/../../java/vert.x/vertx-examples/src/main/clojure/src/vertx/core.clj" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1355509344905" ignored="false" />
+    <file path="$PROJECT_DIR$/../../java/vert.x/vertx-examples/src/main/clojure/src/vertx/core.clj" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1356454836275" ignored="false" />
     <file path="/core.clj" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1355509339166" ignored="false" />
-    <file path="$PROJECT_DIR$/../../java/vert.x/vertx-examples/src/main/clojure/src/vertx/http/server.clj" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1355503731975" ignored="false" />
+    <file path="$PROJECT_DIR$/../../java/vert.x/vertx-examples/src/main/clojure/src/vertx/http/server.clj" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1356454836275" ignored="false" />
     <file path="/server.clj" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1355503731638" ignored="false" />
     <file path="/Clojure REPL" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1355421869621" ignored="false" />
+    <file path="/Dummy.txt" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1357254778930" ignored="false" />
+    <file path="$PROJECT_DIR$/../jubilee/java/src/org/jruby/jubilee/Server.java" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1356457546875" ignored="false" />
+    <file path="/Server.java" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1356457545508" ignored="false" />
+    <file path="$PROJECT_DIR$/../../java/vert.x/vertx-platform/src/main/java/org/vertx/java/deploy/Verticle.java" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1356977119347" ignored="false" />
+    <file path="$PROJECT_DIR$/../../java/vert.x/vertx-core/src/main/java/org/vertx/java/core/http/impl/DefaultHttpServerResponse.java" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1356978723159" ignored="false" />
+    <file path="/DefaultHttpServerResponse.java" changelist="ba71b45a-273c-46ed-b55c-af7a700d3c12" time="1356978704633" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,8 +32,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
-    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
+    <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
         <option name="NOTIFY_UNCAUGHT" value="true" />
@@ -61,7 +66,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <breakpoint_rules default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -74,7 +78,7 @@
       <file leaf-file-name="vertx.clj" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/leiningen/vertx.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="27" selection-start="89" selection-end="89" vertical-scroll-proportion="0.055478502">
+            <state line="3" column="27" selection-start="119" selection-end="119" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -83,7 +87,7 @@
       <file leaf-file-name="project.clj" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="45" selection-start="292" selection-end="292" vertical-scroll-proportion="0.0">
+            <state line="5" column="45" selection-start="296" selection-end="296" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -136,7 +140,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -173,8 +176,23 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lein-vertx" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lein-vertx" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -295,25 +313,25 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="14" width="1436" height="866" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -475,14 +493,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/project.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="45" selection-start="292" selection-end="292" vertical-scroll-proportion="0.0">
+        <state line="5" column="45" selection-start="296" selection-end="296" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/leiningen/vertx.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="27" selection-start="89" selection-end="89" vertical-scroll-proportion="0.055478502">
+        <state line="3" column="27" selection-start="119" selection-end="119" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
