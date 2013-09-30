@@ -4,5 +4,5 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :min-lein-version "2.0.0"
-  :dependencies [[org.clojure/tools.cli "0.2.2"]]
+  :dependencies [[io.vertx/vertx-platform "2.0.2-SNAPSHOT"]]
   :eval-in-leiningen true)
