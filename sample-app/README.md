@@ -1,4 +1,9 @@
 # A sample demonstrating lein-vertx
 
-Run with `lein vertx run` (assuming you have `lein-vertx` installed).
+Update dependencies:
 
+```lein deps```
+
+Run sample verticle with:
+
+```lein vertx run```
