@@ -2,8 +2,10 @@
   (:require [clojure.string :as str]
             [clojure.java.io :as io]
             [leiningen.core.classpath :as classpath]
+            [leiningen.core.project :as project]
             [leiningen.core.eval :as eval]
-            [leiningen.core.user :as user]))
+            [leiningen.core.user :as user]
+            [leiningen.core.main :refer [debug]]))
 
 (defn ^:internal home-dir
   "Returns the home-dir for the plugin, creating if necessary.
@@ -53,7 +55,10 @@
   [project]
   (str/join java.io.File/pathSeparatorChar
             (concat
-             (classpath/get-classpath project)
+             ;; exclude the :provided profile, which should be used to
+             ;; bring in vertx deps for local dev that we don't want
+             ;; on the container classpath
+             (classpath/get-classpath (project/unmerge-profiles project [:provided]))
              [(conf-dir)]
              (map (memfn getAbsolutePath)
                   (classpath/resolve-dependencies :dependencies vertx-deps-project)))))
@@ -91,6 +96,7 @@
 (defn invoke-vertx
   "Invokes vertx in the given project."
   [project & args]
+  (debug (sh-command project args))
   (apply eval/sh (sh-command project args)))
 
 (defn verticlize [x]
