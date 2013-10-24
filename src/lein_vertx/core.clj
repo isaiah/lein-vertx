@@ -1,5 +1,5 @@
 (ns lein-vertx.core
-  (:require [clojure.string :as str]
+  (:require [clojure.string :as string]
             [clojure.java.io :as io]
             [leiningen.core.classpath :as classpath]
             [leiningen.core.project :as project]
@@ -53,7 +53,7 @@
    * the plugin conf-dir
    * the vertx jars"
   [project]
-  (str/join java.io.File/pathSeparatorChar
+  (string/join java.io.File/pathSeparatorChar
             (concat
              ;; exclude the :provided profile, which should be used to
              ;; bring in vertx deps for local dev that we don't want
@@ -82,14 +82,19 @@
                (:require ~ns))
             `(~fn))))
 
+(defn verticlize
+  "Convert namespaced function name into a verticle name"
+  [main-fn]
+  (str (string/join (map string/capitalize (-> main-fn (string/replace "/" ".") (string/split #"\.")))) ".clj"))
+
 (defn ^:internal write-main
   "Writes out a verticle main to the compile-path that will invoke [:vertx :main-fn] from project."
-  [project]
-  (let [verticle-name "verticle_main.clj"
+  [project main-fn]
+  (let [verticle-name (verticlize main-fn)
         compile-dir (doto (io/file (:compile-path project))
                       .mkdirs)]
     (spit (io/file compile-dir verticle-name)
-          (str (synthesize-main (-> project :vertx :main-fn))
+          (str (synthesize-main main-fn)
                "\n"))
     verticle-name))
 
@@ -98,6 +103,3 @@
   [project & args]
   (debug (sh-command project args))
   (apply eval/sh (sh-command project args)))
-
-(defn verticlize [x]
-  (str/join (map str/capitalize (str/split x #"\."))))
