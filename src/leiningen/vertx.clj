@@ -8,7 +8,13 @@
   (:import (java.io FileNotFoundException File)))
 
 (defn run [project main & args]
-  (apply core/invoke-vertx project "run" (core/write-main project (symbol main)) args))
+  (if main
+    (apply core/invoke-vertx project "run"
+           (core/write-main project (symbol main))
+           args)
+    (main/abort (str "No main provided.\n"
+                     "Specify a fully qualified function name on the command-line,\n"
+                     "or under [:vertx :main] in project.clj."))))
 
 (defn vertx
   "Leiningen plugin to run vertx verticle."
