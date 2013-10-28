@@ -84,17 +84,17 @@
 
 (defn verticlize
   "Convert namespaced function name into a verticle name"
-  [main-fn]
-  (str (string/join (map string/capitalize (-> main-fn (string/replace "/" ".") (string/split #"\.")))) ".clj"))
+  [main]
+  (str (string/join (map string/capitalize (-> main (string/replace "/" ".") (string/split #"\.")))) ".clj"))
 
 (defn ^:internal write-main
-  "Writes out a verticle main to the compile-path that will invoke [:vertx :main-fn] from project."
-  [project main-fn]
-  (let [verticle-name (verticlize main-fn)
+  "Writes out a verticle main to the compile-path that will invoke [:vertx :main] from project."
+  [project main]
+  (let [verticle-name (verticlize main)
         compile-dir (doto (io/file (:compile-path project))
                       .mkdirs)]
     (spit (io/file compile-dir verticle-name)
-          (str (synthesize-main main-fn)
+          (str (synthesize-main main)
                "\n"))
     verticle-name))
 

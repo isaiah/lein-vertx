@@ -7,4 +7,4 @@
   :plugins [[lein-vertx "0.1.0-SNAPSHOT"]]
   :profiles {:provided
              {:dependencies [[io.vertx/clojure-api "0.2.0"]]}}
-  :vertx {:main-fn sample-app.core/init})
+  :vertx {:main sample-app.core/init})
