@@ -5,7 +5,10 @@
             [leiningen.core.project :as project]
             [leiningen.core.eval :as eval]
             [leiningen.core.user :as user]
-            [leiningen.core.main :refer [debug]]))
+            [leiningen.core.main :refer [debug]]
+            [clojure.data.json :as json])
+  (:import [java.io FileOutputStream BufferedOutputStream]
+           [java.util.zip ZipEntry ZipOutputStream]))
 
 (defn ^:internal home-dir
   "Returns the home-dir for the plugin, creating if necessary.
@@ -97,6 +100,34 @@
           (str (synthesize-main main)
                "\n"))
     verticle-name))
+
+(defn ^:internal generate-mod-json
+  [project]
+  (with-open [w (io/writer (str (:compile-path project) "/mod.json"))]
+    (.write w (json/write-json (:vertx project)))))
+
+(defn ^:internal outfile
+  []
+  "mod.zip")
+
+(defn write-zip
+  [filespecs]
+  (with-open [zipfile (-> outfile
+                          (FileOutputStream.)
+                          (BufferedOutputStream.)
+                          (ZipOutputStream.))]
+    (doseq [filespec filespec]
+      (io/copy filespec zipfile))))
+
+(defn copy-deps
+  "Copy dependencies to lib"
+  []
+  pending)
+
+(defn buildmod
+  "Generate a zip file for a vertx module"
+  [main-fn]
+  "do nothing")
 
 (defn invoke-vertx
   "Invokes vertx in the given project."

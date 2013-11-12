@@ -6,5 +6,6 @@
   :dependencies [[org.clojure/clojure "1.5.1"]]
   :plugins [[lein-vertx "0.1.0"]]
   :profiles {:provided
-             {:dependencies [[io.vertx/clojure-api "0.2.0"]]}}
+             {:dependencies [[io.vertx/clojure-api "0.2.0"]
+                             [org.clojure/data.json "0.2.3"]]}}
   :vertx {:main sample-app.core/init})
