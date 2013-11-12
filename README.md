@@ -4,17 +4,17 @@ A leiningen plugin to ease clojure vertx verticle development.
 
 ## Usage
 
-This plugin doesn't yet have any official releases. To use it
-currently, you have to check out his repo and install `0.1.0-SNAPSHOT`
-with `lein install`.
-
-Put `[lein-vertx "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your
-`project.clj` or in your `~/.lein/profiles.clj`.
+The current stable release of the plugin is `0.1.0`. Put
+`[lein-vertx "0.1.0"]` into the `:plugins` vector of your
+`project.clj` or in your `~/.lein/profiles.clj` to use it.
 
 Then add `:vertx {:main your-app.core/some-init-fn}` to
 `project.clj`. When you call `lein vertx run`, the plugin will
 synthesize a verticle .clj file that calls that function, and launch
 vertx with that verticle. See the sample-app for an example.
+
+To use the latest development version, check out his repo and install
+`0.2.0-SNAPSHOT` with `lein install`.
 
 ## License
 
