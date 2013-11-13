@@ -101,33 +101,45 @@
                "\n"))
     verticle-name))
 
+(defn modjson-path
+  [project]
+  (str (:target-path project) "/mod.json"))
+
 (defn ^:internal generate-mod-json
   [project]
-  (with-open [w (io/writer (str (:compile-path project) "/mod.json"))]
-    (.write w (json/write-json (:vertx project)))))
+  (with-open [w (io/writer (modjson-path project))]
+    (json/write {:main "main.clj"} w)))
 
-(defn ^:internal outfile
-  []
-  "mod.zip")
+(defn entry-points
+  [project root-path]
+  (conj (filter #(and (.exists %) (not (.isDirectory %))) (file-seq (io/file root-path)))
+        (io/file (modjson-path project))))
+
+(defn ^:internal trim-leading-str
+  [s to-trim]
+  (.replaceAll s (str "^" (Pattern/quote to-trim)) ""))
 
 (defn write-zip
-  [filespecs]
+  [outfile filespecs]
   (with-open [zipfile (-> outfile
                           (FileOutputStream.)
                           (BufferedOutputStream.)
                           (ZipOutputStream.))]
-    (doseq [filespec filespec]
+    (doseq [filespec filespecs]
+      (let [root-path (.getAbsolutePath (io/file "."))
+            path (trim-leading-str (str filespec (str root-path "/")))]
+        (.putNextEntry zipfile (ZipEntry. (str filespec))))
       (io/copy filespec zipfile))))
 
-(defn copy-deps
-  "Copy dependencies to lib"
+(defn outfile
   []
-  pending)
+  "target/mod.zip")
 
 (defn buildmod
   "Generate a zip file for a vertx module"
-  [main-fn]
-  "do nothing")
+  [project main-fn & args]
+  (generate-mod-json project)
+  (write-zip (outfile) (entry-points project (io/file "src"))))
 
 (defn invoke-vertx
   "Invokes vertx in the given project."

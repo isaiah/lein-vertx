@@ -24,4 +24,5 @@
      (case subtask
        "run" (if (first args)
                (apply run project args)
-               (apply run project (-> project :vertx :main) args)))))
+               (apply run project (-> project :vertx :main) args))
+       "buildmod" (core/buildmod project (-> project :vertx :main) args))))
