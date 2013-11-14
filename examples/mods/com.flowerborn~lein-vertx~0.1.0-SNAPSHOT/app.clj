@@ -1,3 +1,3 @@
-(ns app
- (:require [sample-app/core :as core]))
-(core/init)
+(ns test
+ (:use sample-app.core))
+(init)

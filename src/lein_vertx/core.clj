@@ -8,7 +8,8 @@
             [leiningen.core.main :refer [debug]]
             [clojure.data.json :as json])
   (:import [java.io FileOutputStream BufferedOutputStream]
-           [java.util.zip ZipEntry ZipOutputStream]))
+           [java.util.zip ZipEntry ZipOutputStream]
+           [java.util.regex Pattern]))
 
 (defn ^:internal home-dir
   "Returns the home-dir for the plugin, creating if necessary.
@@ -94,26 +95,32 @@
   "Writes out a verticle main to the compile-path that will invoke [:vertx :main] from project."
   [project main]
   (let [verticle-name (verticlize main)
-        compile-dir (doto (io/file (:compile-path project))
-                      .mkdirs)]
-    (spit (io/file compile-dir verticle-name)
+        compile-dir (doto (io/file (:target-path project))
+                      .mkdirs)
+        verticle-file (io/file compile-dir verticle-name)]
+    (spit verticle-file
           (str (synthesize-main main)
                "\n"))
-    verticle-name))
+    {:name verticle-name :content verticle-file}))
 
 (defn modjson-path
   [project]
   (str (:target-path project) "/mod.json"))
 
-(defn ^:internal generate-mod-json
+(defn ^:internal write-mod-json
+  [project verticle]
+  (let [modjson (modjson-path project)]
+    (with-open [w (io/writer (modjson-path project))]
+      (json/write {:main verticle} w))
+    modjson))
+
+(defn libs
   [project]
-  (with-open [w (io/writer (modjson-path project))]
-    (json/write {:main "main.clj"} w)))
+  (classpath/resolve-dependencies :dependencies project))
 
 (defn entry-points
   [project root-path]
-  (conj (filter #(and (.exists %) (not (.isDirectory %))) (file-seq (io/file root-path)))
-        (io/file (modjson-path project))))
+  (filter #(.exists %) (file-seq (io/file root-path))))
 
 (defn ^:internal trim-leading-str
   [s to-trim]
@@ -125,21 +132,41 @@
                           (FileOutputStream.)
                           (BufferedOutputStream.)
                           (ZipOutputStream.))]
-    (doseq [filespec filespecs]
+    (doseq [filespec (:classpath filespecs)]
       (let [root-path (.getAbsolutePath (io/file "."))
-            path (trim-leading-str (str filespec (str root-path "/")))]
-        (.putNextEntry zipfile (ZipEntry. (str filespec))))
-      (io/copy filespec zipfile))))
+            path (trim-leading-str (str filespec) "src/")]
+        (if (.isDirectory filespec)
+          (.putNextEntry zipfile (ZipEntry. (str path "/")))
+          (do
+            (.putNextEntry zipfile (ZipEntry. path))
+            (io/copy filespec zipfile)))))
+    ;; TODO include the dependencies confuses clojure verticle factory
+    ;;(.putNextEntry zipfile (ZipEntry. "lib/"))
+    (comment (doseq [jar (:libs filespecs)]
+      (.putNextEntry zipfile (ZipEntry. (str "lib/" (.getName jar))))
+      (io/copy jar zipfile)))
+    (.putNextEntry zipfile (ZipEntry. "mod.json"))
+    (io/copy (:manifest filespecs) zipfile)
+    (let [verticle (:main filespecs)]
+      (.putNextEntry zipfile (ZipEntry. (:name verticle)))
+      (io/copy (:content verticle) zipfile))))
 
 (defn outfile
-  []
-  "target/mod.zip")
+  [project]
+  (let [name (:name project)
+        version (:version project)
+        target (doto (io/file (:target-path project)) .mkdirs)]
+    (str (io/file target (format "%s-%s.zip" name version)))))
 
 (defn buildmod
   "Generate a zip file for a vertx module"
   [project main-fn & args]
-  (generate-mod-json project)
-  (write-zip (outfile) (entry-points project (io/file "src"))))
+  (let [verticle (write-main project (-> project :vertx :main))]
+    (write-zip (outfile project)
+             {:classpath  (entry-points project (io/file "src"))
+              :libs (libs project)
+              :main verticle
+              :manifest (io/file (write-mod-json project (:name verticle)))})))
 
 (defn invoke-vertx
   "Invokes vertx in the given project."
