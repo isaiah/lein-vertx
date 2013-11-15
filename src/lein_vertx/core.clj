@@ -141,10 +141,10 @@
             (.putNextEntry zipfile (ZipEntry. path))
             (io/copy filespec zipfile)))))
     ;; TODO include the dependencies confuses clojure verticle factory
-    ;;(.putNextEntry zipfile (ZipEntry. "lib/"))
-    (comment (doseq [jar (:libs filespecs)]
+    (.putNextEntry zipfile (ZipEntry. "lib/"))
+    (doseq [jar (:libs filespecs)]
       (.putNextEntry zipfile (ZipEntry. (str "lib/" (.getName jar))))
-      (io/copy jar zipfile)))
+      (io/copy jar zipfile))
     (.putNextEntry zipfile (ZipEntry. "mod.json"))
     (io/copy (:manifest filespecs) zipfile)
     (let [verticle (:main filespecs)]
