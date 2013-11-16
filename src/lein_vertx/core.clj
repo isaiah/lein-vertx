@@ -118,13 +118,24 @@
   [project]
   (classpath/resolve-dependencies :dependencies project))
 
-(defn entry-points
-  [project root-path]
-  (filter #(.exists %) (file-seq (io/file root-path))))
+(defn ^{:internal true} unix-path [path]
+  (.replace path "\\" "/"))
 
 (defn ^:internal trim-leading-str
   [s to-trim]
   (.replaceAll s (str "^" (Pattern/quote to-trim)) ""))
+
+(defn entry-points
+  [project root-dir]
+  (let [root-path (.getAbsolutePath root-dir)]
+    (reduce (fn [acc filespec]
+              (let [path (reduce trim-leading-str (unix-path (.getAbsolutePath filespec)) [root-path "/"])]
+                (if (not (empty? path))
+                  (conj acc {:name path :content filespec})
+                  acc)))
+
+            []
+            (filter #(.exists %) (file-seq root-dir)))))
 
 (defn write-zip
   [outfile filespecs]
@@ -133,14 +144,12 @@
                           (BufferedOutputStream.)
                           (ZipOutputStream.))]
     (doseq [filespec (:classpath filespecs)]
-      (let [root-path (.getAbsolutePath (io/file "."))
-            path (trim-leading-str (str filespec) "src/")]
-        (if (.isDirectory filespec)
-          (.putNextEntry zipfile (ZipEntry. (str path "/")))
+      (let [root-path (.getAbsolutePath (io/file "."))]
+        (if (.isDirectory (:content filespec))
+          (.putNextEntry zipfile (ZipEntry. (str (:name filespec) "/")))
           (do
-            (.putNextEntry zipfile (ZipEntry. path))
-            (io/copy filespec zipfile)))))
-    ;; TODO include the dependencies confuses clojure verticle factory
+            (.putNextEntry zipfile (ZipEntry. (:name filespec)))
+            (io/copy (:content filespec) zipfile)))))
     (.putNextEntry zipfile (ZipEntry. "lib/"))
     (doseq [jar (:libs filespecs)]
       (.putNextEntry zipfile (ZipEntry. (str "lib/" (.getName jar))))
@@ -158,12 +167,16 @@
         target (doto (io/file (:target-path project)) .mkdirs)]
     (str (io/file target (format "%s-%s.zip" name version)))))
 
+(defn potential-entry-points
+  [project]
+  (cons (:compile-path project) (:source-paths project)))
+
 (defn buildmod
   "Generate a zip file for a vertx module"
   [project main-fn & args]
   (let [verticle (write-main project (-> project :vertx :main))]
     (write-zip (outfile project)
-             {:classpath  (entry-points project (io/file "src"))
+             {:classpath  (flatten (map #(entry-points project (io/file %)) (potential-entry-points project)))
               :libs (libs project)
               :main verticle
               :manifest (io/file (write-mod-json project (:name verticle)))})))
