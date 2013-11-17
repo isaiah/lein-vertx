@@ -103,18 +103,26 @@
                "\n"))
     {:name verticle-name :content verticle-file}))
 
-(defn modjson-path
+(defn ^:internal modjson-path
   [project]
   (str (:target-path project) "/mod.json"))
 
 (defn ^:internal write-mod-json
+  "Write module descriptor file to mod.json in target-path"
   [project verticle]
   (let [modjson (modjson-path project)]
-    (with-open [w (io/writer (modjson-path project))]
-      (json/write {:main verticle} w))
+    (with-open [w (io/writer modjson)]
+      (json/write (merge {:main verticle}
+                         (-> project :vertx (dissoc :main))
+                         {:description (:description project)
+                          :homepage (:url project)
+                          :licenses [(-> project :license :name)]})
+                  w
+                  :escape-slash false))
     modjson))
 
 (defn libs
+  "Resolve dependencies jars of the project."
   [project]
   (classpath/resolve-dependencies :dependencies project))
 
@@ -126,6 +134,7 @@
   (.replaceAll s (str "^" (Pattern/quote to-trim)) ""))
 
 (defn entry-points
+  "Files to be copied into module's classpath."
   [project root-dir]
   (let [root-path (.getAbsolutePath root-dir)]
     (reduce (fn [acc filespec]
@@ -137,8 +146,7 @@
             []
             (filter #(.exists %) (file-seq root-dir)))))
 
-(defn write-zip
-  [outfile filespecs]
+(defn write-zip [outfile filespecs]
   (with-open [zipfile (-> outfile
                           (FileOutputStream.)
                           (BufferedOutputStream.)
@@ -172,7 +180,7 @@
   (cons (:compile-path project) (:source-paths project)))
 
 (defn buildmod
-  "Generate a zip file for a vertx module"
+  "Generate a zip file for the vertx module"
   [project main-fn & args]
   (let [verticle (write-main project (-> project :vertx :main))]
     (write-zip (outfile project)
