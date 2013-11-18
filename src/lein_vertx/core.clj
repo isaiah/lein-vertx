@@ -95,17 +95,17 @@
   "Writes out a verticle main to the compile-path that will invoke [:vertx :main] from project."
   [project main]
   (let [verticle-name (verticlize main)
-        compile-dir (doto (io/file (:target-path project))
+        compile-dir (doto (io/file (:compile-path project))
                       .mkdirs)
         verticle-file (io/file compile-dir verticle-name)]
     (spit verticle-file
           (str (synthesize-main main)
                "\n"))
-    {:name verticle-name :content verticle-file}))
+    verticle-name))
 
 (defn ^:internal modjson-path
   [project]
-  (str (:target-path project) "/mod.json"))
+  (str (:compile-path project) "/mod.json"))
 
 (defn ^:internal write-mod-json
   "Write module descriptor file to mod.json in target-path"
@@ -161,12 +161,7 @@
     (.putNextEntry zipfile (ZipEntry. "lib/"))
     (doseq [jar (:libs filespecs)]
       (.putNextEntry zipfile (ZipEntry. (str "lib/" (.getName jar))))
-      (io/copy jar zipfile))
-    (.putNextEntry zipfile (ZipEntry. "mod.json"))
-    (io/copy (:manifest filespecs) zipfile)
-    (let [verticle (:main filespecs)]
-      (.putNextEntry zipfile (ZipEntry. (:name verticle)))
-      (io/copy (:content verticle) zipfile))))
+      (io/copy jar zipfile))))
 
 (defn outfile
   [project]
@@ -182,12 +177,11 @@
 (defn buildmod
   "Generate a zip file for the vertx module"
   [project main-fn & args]
-  (let [verticle (write-main project (-> project :vertx :main))]
+  (let [verticle-name (write-main project (-> project :vertx :main))]
+    (write-mod-json project verticle-name)
     (write-zip (outfile project)
              {:classpath  (flatten (map #(entry-points project (io/file %)) (potential-entry-points project)))
-              :libs (libs project)
-              :main verticle
-              :manifest (io/file (write-mod-json project (:name verticle)))})))
+              :libs (libs project)})))
 
 (defn invoke-vertx
   "Invokes vertx in the given project."
