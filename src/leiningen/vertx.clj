@@ -7,7 +7,9 @@
             [lein-vertx.core :as core])
   (:import (java.io FileNotFoundException File)))
 
-(defn run [project main & args]
+(defn run 
+  "Run the main function specified from command line or under [:vertx :main] in project.clj"
+  [project main & args]
   (if main
     (apply core/invoke-vertx project "run"
            (core/write-main project (symbol main))
@@ -18,6 +20,8 @@
 
 (defn vertx
   "Leiningen plugin to run vertx verticle."
+   {:help-arglists '([subtask [args...]])
+    :subtasks [#'run #'core/buildmod]}
   ([project]
      (println (help-for "vertx")))
   ([project subtask & args]
@@ -25,4 +29,5 @@
        "run" (if (first args)
                (apply run project args)
                (apply run project (-> project :vertx :main) args))
-       "buildmod" (core/buildmod project (-> project :vertx :main) args))))
+       "buildmod" (core/buildmod project (-> project :vertx :main) args)
+       (println (help-for "vertx")))))
