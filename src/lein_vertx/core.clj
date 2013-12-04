@@ -20,10 +20,10 @@
         conf-dir (io/file dir "conf")]
     (when-not (.exists dir)
       (println "Creating lein-vertx conf dir at" (.getAbsolutePath dir))
-      (.mkdirs conf-dir))
-    (doseq [n ["langs.properties" "repos.txt" "logging.properties"]]
+      (.mkdirs conf-dir)
+      (doseq [n ["langs.properties" "repos.txt" "logging.properties"]]
         (io/copy (io/reader (io/resource (str "lein-vertx/_" n)))
-                 (io/file conf-dir n)))
+          (io/file conf-dir n))))
     dir))
 
 (defn ^:internal mods-dir
