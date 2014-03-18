@@ -4,7 +4,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [io.vertx/vertx-hazelcast "2.1M2"]]
+                 [io.vertx/vertx-hazelcast "2.1RC1"]]
   :plugins [[lein-vertx "0.3.0-SNAPSHOT"]]
   :vertx {:main sample-app.core/init
           :author "Isaiah Peng"
