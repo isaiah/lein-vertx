@@ -1,4 +1,4 @@
-(defproject lein-vertx "0.3.0-SNAPSHOT"
+(defproject lein-vertx "0.3.0"
   :description "leiningen plugin for vertx development"
   :url "https://www.github.com/isaiah/lein-vertx"
   :license {:name "Eclipse Public License"
