@@ -126,9 +126,6 @@
   [project]
   (classpath/resolve-dependencies :dependencies project))
 
-(defn ^{:internal true} unix-path [path]
-  (.replace path "\\" "/"))
-
 (defn ^:internal trim-leading-str
   [s to-trim]
   (.replaceAll s (str "^" (Pattern/quote to-trim)) ""))
@@ -138,7 +135,7 @@
   [project root-dir]
   (let [root-path (.getAbsolutePath root-dir)]
     (reduce (fn [acc filespec]
-              (let [path (reduce trim-leading-str (unix-path (.getAbsolutePath filespec)) [root-path "/"])]
+              (let [path (reduce trim-leading-str (.getAbsolutePath filespec) [root-path "/"])]
                 (if (not (empty? path))
                   (conj acc {:name path :content filespec})
                   acc)))
