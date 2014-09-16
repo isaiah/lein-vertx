@@ -30,4 +30,5 @@
                (apply run project args)
                (apply run project (-> project :vertx :main) args))
        "buildmod" (core/buildmod project (-> project :vertx :main) args)
+       "repl" (run project "lein-vertx.repl/init")
        (println (help-for "vertx")))))
