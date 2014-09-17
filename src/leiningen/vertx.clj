@@ -18,10 +18,15 @@
                      "Specify a fully qualified function name on the command-line,\n"
                      "or under [:vertx :main] in project.clj."))))
 
+(defn repl
+  "Start vertx repl on a random port"
+  [project]
+  (run project "vertx.repl/start"))
+
 (defn vertx
   "Leiningen plugin to run vertx verticle."
    {:help-arglists '([subtask [args...]])
-    :subtasks [#'run #'core/buildmod]}
+    :subtasks [#'run #'repl #'core/buildmod]}
   ([project]
      (println (help-for "vertx")))
   ([project subtask & args]
@@ -29,6 +34,6 @@
        "run" (if (first args)
                (apply run project args)
                (apply run project (-> project :vertx :main) args))
+       "repl" (repl project)
        "buildmod" (core/buildmod project (-> project :vertx :main) args)
-       "repl" (run project "vertx.repl/start")
        (println (help-for "vertx")))))
