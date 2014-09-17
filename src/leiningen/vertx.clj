@@ -7,16 +7,12 @@
             [lein-vertx.core :as core])
   (:import (java.io FileNotFoundException File)))
 
-(defn run 
-  "Run the main function specified from command line or under [:vertx :main] in project.clj"
+(defn run
+  "Run the main function specified from command line '-m' or under [:vertx :main] in project.clj "
   [project main & args]
-  (if main
-    (apply core/invoke-vertx project "run"
-           (core/write-main project (symbol main))
-           args)
-    (main/abort (str "No main provided.\n"
-                     "Specify a fully qualified function name on the command-line,\n"
-                     "or under [:vertx :main] in project.clj."))))
+  (apply core/invoke-vertx project "run"
+         (core/write-main project (symbol main))
+         args))
 
 (defn repl
   "Start vertx repl on a random port"
@@ -29,11 +25,17 @@
     :subtasks [#'run #'repl #'core/buildmod]}
   ([project]
      (println (help-for "vertx")))
-  ([project subtask & args]
+  ([project subtask & [flag & args :as all-args]]
      (case subtask
-       "run" (if (first args)
-               (apply run project args)
-               (apply run project (-> project :vertx :main) args))
+       "run" (cond (or
+                     (= flag ":main")
+                     (= flag "-m")) (if (first args)
+                                      (apply run project args)
+                                      (main/abort "Option -m requires a qualified function name."))
+                   (-> project :vertx :main) (apply run project (-> project :vertx :main) all-args)
+                   :else (main/abort (str "No main provided.\n"
+                     "Specify a fully qualified function name on the command-line,\n"
+                     "or under [:vertx :main] in project.clj.")))
        "repl" (repl project)
-       "buildmod" (core/buildmod project (-> project :vertx :main) args)
+       "buildmod" (core/buildmod project (-> project :vertx :main) all-args)
        (println (help-for "vertx")))))
