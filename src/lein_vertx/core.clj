@@ -45,7 +45,9 @@
 
 (def ^:internal vertx-deps-project
   "Dummy project used to resolve vertx deps for the classpath of the subprocess"
-  {:dependencies '[[io.vertx/vertx-platform "2.1.1"]]
+  {:dependencies '[[io.vertx/vertx-platform "2.1.2"]
+                   [io.vertx/vertx-hazelcast "2.1.2"]
+                   ]
    :repositories [["central" {:url "http://repo1.maven.org/maven2/" :snapshots false}]
                   ["sonatype" {:url "http://oss.sonatype.org/content/repositories/snapshots" :snapshots true}]
                   ["bintray" {:url "http://dl.bintray.com"}]]})
