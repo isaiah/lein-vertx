@@ -171,7 +171,9 @@
 
 (defn potential-entry-points
   [project]
-  (cons (:compile-path project) (:source-paths project)))
+  (concat [(:compile-path project)]
+          (:source-paths project)
+          (:resource-paths project)))
 
 (defn buildmod
   "Generate a zip file for the vertx module"

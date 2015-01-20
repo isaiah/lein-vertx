@@ -16,8 +16,8 @@
 
 (defn repl
   "Start vertx repl on a random port"
-  [project]
-  (run project "vertx.repl/start"))
+  [project & args]
+  (apply run project "vertx.repl/start" args))
 
 (defn vertx
   "Leiningen plugin to run vertx verticle."
@@ -36,6 +36,6 @@
                    :else (main/abort (str "No main provided.\n"
                      "Specify a fully qualified function name on the command-line,\n"
                      "or under [:vertx :main] in project.clj.")))
-       "repl" (repl project)
+       "repl" (apply repl project all-args)
        "buildmod" (core/buildmod project (-> project :vertx :main) all-args)
        (println (help-for "vertx")))))
